@@ -1,0 +1,11 @@
+[Solved] ERROR 1045 (28000): Access denied for user 'user'@'host' (using password: YES)
+
+Solution :
+
+mysql> select *from mysql.user where user like '%root%' \G
+*************************** 1. row ***************************
+                  Host: localhost
+                  User: root
+
+
+https://www.rathishkumar.in/2017/04/error-1045-28000-access-denied-for-user-user-host-using-password-YES.html
