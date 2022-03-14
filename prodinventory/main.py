@@ -14,6 +14,10 @@ def take_user_inputs():
 
     except ValueError:
         print("Please enter valid input..")
+    except FloatingPointError:
+        print("Enter float value..")
+    except:
+        print("Please Enter Valid input..")
 
 
 if __name__=='__main__':
@@ -21,24 +25,28 @@ if __name__=='__main__':
 
     while True:
         print("Enter Choice 1 Add Product 2 Display Products 3 Search Product 4 Delete Product 5 Update Product 6 Exit")
-        option=int(input("Enter Your choice: "))
-        if option==1:
-            proddetails=take_user_inputs()
-            prod.create_product(proddetails)
-        elif option==2:
-            prod.display_all_products()
-        elif option==3:
-            prodid = int(input("Enter Product Id which one you want? "))
-            prod.search_product(prodid)
-        elif option==4:
-            prod.remove_prdoduct()
-        elif option==5:
-            prod.update_product()
-        elif option==6:
-            print("Thanks for using this application..")
-            sys.exit()
-        else:
-            print("Invalid option..")
+        try:
+            option=int(input("Enter Your choice: "))
+            if option==1:
+                proddetails=take_user_inputs()
+                prod.create_product(proddetails)
+            elif option==2:
+                prod.display_all_products()
+            elif option==3:
+                prodid = int(input("Enter Product Id which one you want? "))
+                prod.search_product(prodid)
+            elif option==4:
+                prod.remove_prdoduct()
+            elif option==5:
+                prod.update_product()
+            elif option==6:
+                print("Thanks for using this application..")
+                sys.exit()
+            else:
+                print("Invalid option..")
+        except ValueError as e:
+            print("Please enter valid input..",e)
+            continue
 
         choice=input("Do you want to continue? (yes|no)")
         if choice.lower() in ["no","n"]:
