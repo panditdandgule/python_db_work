@@ -24,12 +24,13 @@ if __name__=='__main__':
     prod=ProductServiceImpl()
 
     while True:
-        print("Enter Choice 1 Add Product 2 Display Products 3 Search Product 4 Delete Product 5 Update Product 6 Exit")
+        print("Enter Choice 1 Add Product 2 Display Products 3 Search Product 4 Delete Product "
+              "5 Update Product 6 Max Price 7 Min Price 8 Vendor Products 9 Exit")
         try:
             option=int(input("Enter Your choice: "))
             if option==1:
                 proddetails=take_user_inputs()
-                prod.create_product(proddetails)
+                print(prod.create_product(proddetails))
             elif option==2:
                 prod.display_all_products()
             elif option==3:
@@ -40,6 +41,13 @@ if __name__=='__main__':
             elif option==5:
                 prod.update_product()
             elif option==6:
+                print(prod.max_product_price())
+            elif option==7:
+                print(prod.min_product_price())
+            elif option==8:
+                vname=input("Enter Vendor Name: ")
+                prod.display_vendors(vname)
+            elif option==9:
                 print("Thanks for using this application..")
                 sys.exit()
             else:

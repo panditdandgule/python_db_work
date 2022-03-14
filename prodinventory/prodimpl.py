@@ -21,6 +21,7 @@ class ProductServiceImpl(ProductServices):
                 if prodid > 0 and type(prodid) == int:
                     if result:
                         print("Product Id is already available..")
+                        return cursor.fetchone()
                     else:
                         query = "insert into product values (%d,'%s',%d,%f,'%s','%s')"
                         cursor.execute(query % (
@@ -185,3 +186,61 @@ class ProductServiceImpl(ProductServices):
                 cursor.close()
             if conn:
                 conn.close()
+
+    def max_product_price(self):
+        try:
+            conn = dbconnection.get_connection()
+            cursor = conn.cursor()
+
+            query = "select prodid,prodname,prodqty,max(price),city from product"
+            cursor.execute(query)
+            return cursor.fetchone()
+        except pymysql.DatabaseError as e:
+            if conn:
+                conn.rollback()
+            print("There was error while displaying max price..", e)
+        finally:
+            if cursor:
+                cursor.close()
+            if conn:
+                conn.close()
+
+    def min_product_price(self):
+        try:
+            conn = dbconnection.get_connection()
+            cursor = conn.cursor()
+            query = "select prodid,prodname,prodqty,min(price),city from product"
+            cursor.execute(query)
+            return cursor.fetchone()
+        except pymysql.DatabaseError as e:
+            if conn:
+                conn.rollback()
+            print("There was an error while displaying min price", e)
+        finally:
+            if cursor:
+                cursor.close()
+            if conn:
+                conn.close()
+
+    def display_vendors(self,vname):
+        try:
+            conn=dbconnection.get_connection()
+            cursor=conn.cursor()
+            query="select * from product where vendor='%s'"
+            cursor.execute(query %(vname))
+            vendordata=cursor.fetchall()
+
+            print("Following are the",vname,"products")
+            print("ID\t\tName\t\t\tQty\t\t\tPrice\t\t\tVendor\t\tCity")
+            for data in vendordata:
+                print(data[0], "\t\t", data[1], "\t\t", data[2], "\t\t", data[3], "\t\t", data[4], "\t\t", data[5])
+        except pymysql.DatabaseError as e:
+            if conn:
+                conn.rollback()
+            print("There was an error while fetching data",e)
+        finally:
+            if cursor:
+                cursor.close()
+            if conn:
+                conn.close()
+
